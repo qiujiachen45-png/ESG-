@@ -1,6 +1,6 @@
 
 
-在ESG分析大赛中数据非常重要，本组通过Wharton获取近近几年公司的数据进行全方位分析，最终形成分析报告
+在ESG分析大赛中数据非常重要，本组通过Wharton获取近近几年公司的数据进行全方位分析，最终形成分析报告，工资和ESG财报分析为核心代码
 
 <img width="1282" height="712" alt="image" src="https://github.com/user-attachments/assets/d084b7cc-cd4f-4767-9ec8-9be09bcd18f3" />
 <img width="1302" height="735" alt="image" src="https://github.com/user-attachments/assets/2fa037a1-c871-4be9-94b8-c40f86b8b757" />
