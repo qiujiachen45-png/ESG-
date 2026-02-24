@@ -6,18 +6,19 @@ import warnings
 import os
 
 warnings.filterwarnings('ignore')
+#忽略所有显示
 
-
+#面向对象编程
 class ESGDataAnalyzer:
     """ESG数据分析器"""
-
+#面向对象编程
     def __init__(self, file_path='znttaqleyuk9pjxj.csv'):
         self.financial_data = None
         self.file_path = file_path
         self.setup_visualization()
-
+#图像设置
     def setup_visualization(self):
-        """设置可视化参数 - 增强版"""
+        
         plt.rcParams['font.sans-serif'] = ['SimHei', 'DejaVu Sans', 'Arial']
         plt.rcParams['axes.unicode_minus'] = False
         plt.rcParams['figure.figsize'] = (16, 14)  # 增大默认图像尺寸，提供更多空间
@@ -30,20 +31,20 @@ class ESGDataAnalyzer:
         plt.rcParams['ytick.labelsize'] = 10
         plt.rcParams['legend.fontsize'] = 10
         plt.rcParams['figure.titlesize'] = 16
-        print("📊 可视化环境设置完成")
-
+        print("可视化环境设置完成")
+    #数据读取函数
     def load_local_data(self):
-        """从本地CSV文件加载ESG数据"""
-        print("🔗 正在加载本地ESG数据文件...")
+        #数据写入
+        print("本地数据加载")
 
         try:
-            # 检查文件是否存在
+            # 检查文件是否存在，是否成功读取
             if not os.path.exists(self.file_path):
-                print(f"❌ 文件不存在: {self.file_path}")
-                print("💡 请确保CSV文件在当前目录下")
+                print(f"文件不存在: {self.file_path}")
+                print("请确保CSV文件在当前目录下")
                 return False
 
-            # 读取CSV文件
+            # 读取CSV文件，可能是编码的问题
             self.financial_data = pd.read_csv(self.file_path, encoding='utf-8')
 
             # 如果utf-8读取失败，尝试其他编码
@@ -51,16 +52,17 @@ class ESGDataAnalyzer:
                 print("⚠️ UTF-8编码读取失败，尝试GBK编码...")
                 self.financial_data = pd.read_csv(self.file_path, encoding='gbk')
 
-            print(f"✅ 成功加载ESG数据: {len(self.financial_data)} 条记录")
-            print(f"📊 数据形状: {self.financial_data.shape}")
-            print(f"📋 字段数量: {len(self.financial_data.columns)}")
+            #数据特征前瞻
+            print(f"成功加载ESG数据: {len(self.financial_data)} 条记录")
+            print(f"数据形状: {self.financial_data.shape}")
+            print(f"字段数量: {len(self.financial_data.columns)}")
 
             # 显示数据基本信息
             print("\n🔍 数据基本信息:")
             print(f"数据列: {list(self.financial_data.columns)[:10]}...")  # 只显示前10列
 
             # 显示前几行数据
-            print("\n📄 数据预览:")
+            print("\n数据预览:")
             print(self.financial_data.head(5).to_string(index=False))
 
             return True
@@ -70,30 +72,31 @@ class ESGDataAnalyzer:
             return False
 
     def explore_data_fields(self):
-        """探索ESG数据字段结构"""
+        #提前创建字符串
         print("\n" + "=" * 80)
         print("1. 探索ESG数据字段结构")
         print("=" * 80)
-
+        
         if self.financial_data is None:
-            print("❌ 没有可用的数据")
+            print("❌没有可用的数据")
             return
 
-        print(f"📊 共有 {len(self.financial_data.columns)} 个字段")
-        print(f"📈 数据记录数: {len(self.financial_data)}")
+        print(f"共有 {len(self.financial_data.columns)} 个字段")
+        print(f"数据记录数: {len(self.financial_data)}")
 
         # 分类显示ESG字段
         self._categorize_esg_fields()
 
     def _categorize_esg_fields(self):
-        """分类显示ESG数据字段"""
+    
         field_names = self.financial_data.columns.tolist()
 
-        # 基础信息字段
+        #基础信息字段
+        #通过关键词对field_name进行计数，筛选前15
         basic_fields = [f for f in field_names if
                         any(keyword in f.lower() for keyword in
                             ['issuer', 'name', 'date', 'country', 'industry', 'rating'])]
-        print(f"\n🏷️ 基础信息字段 ({len(basic_fields)}个):")
+        print(f"\n 基础信息字段 ({len(basic_fields)}个):")
         for field in sorted(basic_fields)[:15]:
             print(f"  - {field}")
 
@@ -123,12 +126,12 @@ class ESGDataAnalyzer:
 
         # 评分字段
         score_fields = [f for f in field_names if 'score' in f.lower()]
-        print(f"\n⭐ 评分字段 ({len(score_fields)}个):")
+        print(f"\n 评分字段 ({len(score_fields)}个):")
         for field in sorted(score_fields)[:20]:
             print(f"  - {field}")
 
     def identify_key_fields(self):
-        """识别关键ESG字段"""
+        #行业字段筛选
         print("\n" + "=" * 80)
         print("2. 识别关键ESG字段")
         print("=" * 80)
@@ -145,7 +148,7 @@ class ESGDataAnalyzer:
                        any(keyword in col.lower() for keyword in
                            ['issuer_name', 'name', 'company'])]
         key_fields['name'] = name_fields[0] if name_fields else None
-        print(f"🏢 公司名称字段: {key_fields['name']}")
+        print(f"公司名称字段: {key_fields['name']}")
 
         # 寻找日期字段
         date_fields = [col for col in available_columns if
@@ -173,7 +176,7 @@ class ESGDataAnalyzer:
                               any(keyword in col.lower() for keyword in
                                   ['weighted_average_score', 'total_score', 'overall_score'])]
         key_fields['total_score'] = total_score_fields[0] if total_score_fields else None
-        print(f"📊 总分字段: {key_fields['total_score']}")
+        print(f"总分字段: {key_fields['total_score']}")
 
         # 寻找三大支柱分数
         pillar_fields = {
@@ -184,12 +187,12 @@ class ESGDataAnalyzer:
 
         for pillar, fields in pillar_fields.items():
             key_fields[f'{pillar}_score'] = fields[0] if fields else None
-            print(f"🌱 {pillar.capitalize()}支柱分数: {key_fields[f'{pillar}_score']}")
+            print(f" {pillar.capitalize()}支柱分数: {key_fields[f'{pillar}_score']}")
 
         return key_fields
 
     def prepare_esg_data(self, key_fields):
-        """准备ESG数据用于分析"""
+        
         print("\n" + "=" * 80)
         print("3. 准备ESG数据")
         print("=" * 80)
@@ -235,17 +238,17 @@ class ESGDataAnalyzer:
         # 更新financial_data
         self.financial_data = analysis_data
         return True
-
+        
     def calculate_esg_metrics(self):
         """计算ESG指标"""
         print("\n" + "=" * 80)
         print("4. 计算ESG指标")
         print("=" * 80)
-
+        
         if self.financial_data is None or self.financial_data.empty:
             print("❌ 没有可用的ESG数据")
             return
-
+      
         metrics_calculated = []
 
         # 检查并处理ESG分数
@@ -272,7 +275,7 @@ class ESGDataAnalyzer:
             print(f"\n📊 ESG评级分布:")
             for rating, count in rating_counts.items():
                 print(f"  - {rating}: {count} 家公司")
-
+        
         if metrics_calculated:
             print(f"\n📊 成功分析 {len(metrics_calculated)} 个ESG指标")
 
@@ -284,13 +287,13 @@ class ESGDataAnalyzer:
             print(self.financial_data[display_cols].head(10).to_string(index=False))
         else:
             print("⚠️ 未能计算任何ESG指标")
-
+   
     def descriptive_analysis(self):
         """描述性统计分析"""
         print("\n" + "=" * 80)
         print("5. 描述性统计分析")
         print("=" * 80)
-
+          
         if self.financial_data is None or self.financial_data.empty:
             print("❌ 没有可用的ESG数据")
             return
