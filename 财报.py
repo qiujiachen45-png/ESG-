@@ -84,7 +84,7 @@ class ESGDataAnalyzer:
         print(f"共有 {len(self.financial_data.columns)} 个字段")
         print(f"数据记录数: {len(self.financial_data)}")
 
-        # 分类显示ESG字段
+        # 分类显示ESG字段，进行各个行业主体打分
         self._categorize_esg_fields()
 
     def _categorize_esg_fields(self):
